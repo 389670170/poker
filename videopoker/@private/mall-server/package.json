@@ -1,0 +1,65 @@
+{
+  "_args": [
+    [
+      "git+ssh://git@10.10.10.10:2222/lilinguo/mall-server.git",
+      "/Users/c/video-poker-server"
+    ]
+  ],
+  "_from": "git+ssh://git@10.10.10.10:2222/lilinguo/mall-server.git",
+  "_id": "@private/mall-server@git+ssh://git@10.10.10.10:2222/lilinguo/mall-server.git#9a855329df390b3d374c71b761ab318029907db5",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/@private/mall-server",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "git+ssh://git@10.10.10.10:2222/lilinguo/mall-server.git",
+    "rawSpec": "git+ssh://git@10.10.10.10:2222/lilinguo/mall-server.git",
+    "saveSpec": "git+ssh://git@10.10.10.10:2222/lilinguo/mall-server.git",
+    "fetchSpec": "ssh://git@10.10.10.10:2222/lilinguo/mall-server.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+ssh://git@10.10.10.10:2222/lilinguo/mall-server.git#9a855329df390b3d374c71b761ab318029907db5",
+  "_spec": "git+ssh://git@10.10.10.10:2222/lilinguo/mall-server.git",
+  "_where": "/Users/c/video-poker-server",
+  "dependencies": {
+    "@private/lambda-commons": "git+ssh://git@10.10.10.10:2222/fengzhengrong/nodejs-lambda-commons.git",
+    "crypto": "^1.0.1",
+    "google-play-billing-validator": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.3",
+    "@types/node": "^11.13.4",
+    "archiver": "^3.0.0",
+    "aws-sdk": "^2.381.0",
+    "babel-cli": "^6.26.0",
+    "base64-js": "^1.3.0",
+    "bluebird": "^3.5.3",
+    "body-parser": "^1.18.3",
+    "child_process": "^1.0.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "ioredis": "^4.9.0",
+    "jest": "^23.4.2",
+    "migration": "^0.3.0",
+    "node-schedule": "^1.3.0",
+    "pako": "^1.0.10",
+    "pg": "^7.7.1",
+    "protobufjs": "^6.8.8",
+    "redis-clustr": "^1.7.0",
+    "request-promise": "^4.2.4",
+    "sfs2x-api": "^1.7.13",
+    "typeorm": "^0.2.16"
+  },
+  "license": "ISC",
+  "main": "index.js",
+  "name": "@private/mall-server",
+  "private": true,
+  "scripts": {
+    "test": "jest"
+  },
+  "version": "1.0.0"
+}

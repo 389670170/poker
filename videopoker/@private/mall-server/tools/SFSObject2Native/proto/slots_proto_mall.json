@@ -1,0 +1,216 @@
+{
+  // ===========================================
+  // 宏类型
+  "__macros": {
+    // 枚举类型命名空间
+    "__namespace": "DocEnum",
+    // 枚举类型定义
+    "__defines": {
+      // 商城状态
+      "MallStatus": {
+        "SUCCESS": 0,
+        "FAILED": 1,
+        "SERVER_ERR": 500,
+        "ORDER_VERIFY_FAILED": 1001,
+        "ORDER_COMPLETE": 1002
+      },
+      // 商店页面分类
+      "PageCode": {
+        "SHOP_COIN": "shop_coin", // 金币商店
+        "SHOP_DIAMOND": "shop_diamond", // 砖石商店
+        "SHOP_ITEM": "shop_item", // 道具商店
+        "SHOP_AVATAR": "shop_avatar", // 头像商店
+        "SHOP_PLAYERSHOW": "shop_playershow", // 玩家秀商店
+        "SHOP_HORN": "shop_horn" // 喇叭商店
+      },
+      // 描述订单分类，包含多个订单，每个订单包含若干个GoodsCode
+      "BillingCode": {
+        "COIN": "coin", // 金币商店
+        "SUBSCRIBE": "subscribe", // 订阅
+        "DIAMOND": "diamond", // 砖石商店
+        "AVATAR": "avatar", // 头像商店
+        "PIG": "pig", // 小猪
+        "BIGWIN_MULT": "bigwin_mult", // bigwin加倍
+        "DEAL_SHOP": "shop_deal", // 关闭coin shop弹出的special deal
+        "DEAL_PERSONAL": "personal_deal", // 普通的关卡deal
+        "DEAL_SPECIAL": "special_deal", // need more deal
+        "DEAL_MOMENT": "moment_deal",
+        "ITEM_SLOTS_KEY": "slots_key", // 道具：机器钥匙
+        "ITEM_VAULT_KEY": "vault_key", // 道具：金库钥匙
+        "ITEM_SCRATCH": "scratch", // 道具：刮刮卡
+        "ITEM_HORN": "horn" // 道具：喇叭
+      },
+      // 描述商品最小更新单元
+      "GoodsCode": {
+        "COIN": "coin",
+        "DIAMOND": "diamond",
+        "VIP_POINT": "vip_point",
+        "CARD_BAG_2": "card_bag_2",
+        "CARD_BAG_3": "card_bag_3",
+        "CARD_BAG_4": "card_bag_4",
+        "CARD_BAG_5": "card_bag_5",
+        "HORN": "horn",
+        "AVATAR": "avatar",
+        "SCRATCH": "scratch",
+        "SLOTS_KEY": "slots_key",
+        "VAULT_KEY": "vault_key",
+        "WINNING_COIN": "winning_coin",
+        "BUFF_COIN": "buff_coin",
+        "BUFF_BET": "buff_bet",
+        "BUFF_WHEEL": "buff_wheel",
+        "BUFF_PIG": "buff_pig",
+        "BUFF_VAULT": "buff_vault",
+        "BUFF_EXP": "buff_exp"
+      }
+    }
+  },
+  // ===========================================
+  // 公用结构
+  "__common": {},
+  // ===========================================
+  // RPC消息
+  "__rpc": {
+    // 通用请求商店页
+    "RequestBillingInfo": {
+      "__req": {
+        "pageCode": "string" // 页面类型
+      },
+      "__rsp": {
+        "data": {
+          "pageCode": "string",
+          "billingList": [
+            {
+              "billingCode": "string",
+              "billingName": "string",
+              "billingDes": "string",
+              "isFirstBuy": "bool",
+              "items": [
+                {
+                  "paymentId": "int",
+                  "sku": "string",
+                  "clientType": "string",
+                  "originPrice": "double", // 原价
+                  "price": "double", // 和计费点 sku 相关
+                  "isBest": "bool",
+                  "isPopular": "bool",
+                  "mainDetail": [ // 主商品
+                    {
+                      "goodsCode": "string", // 商品码，确定发货接口
+                      "amount": "number", // 增量
+                      "extraInfo": "string" // 额外信息，如卡包，还需要附加卡包ID
+                    }
+                  ],
+                  "extraDetail": [ // 附属商品
+                    {
+                      "goodsCode": "string",
+                      "amount": "number",
+                      "extraInfo": "string"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "status": "int" // 参考 MallStatus
+      }
+    },
+    //请求新的订单，购买发起
+    "RequestNewOrder": {
+      "__req": {
+        "billingCode": "string",
+        "paymentId": "int",
+        "sku": "string",
+        "extraInfo": "string"
+      },
+      "__rsp": {
+        "data": {
+          "orderNo": "string" //订单号
+        },
+        "status": "int" // 参考 MallStatus
+      }
+    },
+    // 购买验证
+    "RequestPurchaseResult": {
+      "__req": {
+        "orderNo": "string", //订单号
+        "purchaseData": "string", //用于校验的信息，iOS和Android通用,在android是json, android需要把签名信息合并过来
+        "signatureData": "string", //签名信息，Android独有
+        "packageName": "string" //包名
+      },
+      "__rsp": {
+        "data": {
+          "debugUser": "bool", //是否是测试用户
+          "goodsList": [
+            {
+              "goodsCode": "string",
+              "amount": "number",
+              "extraInfo": "string",
+              "balance": "number" // 最终拥有值
+            }
+          ]
+        },
+        "status": "int" // 参考 MallStatus
+      }
+    },
+    // 发送购买失败
+    "SendPurchaseFailed": {
+      "__req": {
+        "orderNo": "string", // 订单号
+        "state": "int", // 购买状态，参考 PurchaseStateType
+        "errorMsg": "string" // 错误信息
+      }
+    },
+    // 请求异常订单列表
+    "RequestErrorOrderList": {
+      "__req": {
+        "errorOrderList": [
+          "string"
+        ],
+        "unknownOrderList": [
+          {
+            "sku": "string",
+            "orderTime": "string"
+          }
+        ]
+      },
+      "__rsp": {
+        "data": {
+          "errorList": [
+            {
+              "orderNo": "string",
+              "createTime": "string",
+              "sku": "string",
+              "paymentId": "int",
+              "billingCode": "string",
+              "goodsDetail": [
+                {
+                  "goodsCode": "string",
+                  "amount": "number",
+                  "extraInfo": "string"
+                }
+              ]
+            }
+          ]
+        },
+        "status": "int" // 参考 MallStatus
+      }
+    },
+    //恢复购买
+    "RequestRestoreResult": {
+      "__req": {
+        "sku": "string",
+        //计费点
+        "purchase_data": "string",
+        //用于校验的信息，iOS和Android通用,在android是json
+        "signature_data": "string",
+        //签名信息，Android独有
+        "package_name": "string"
+        //包名
+      },
+      "__rsp": {
+        "isSuc": "bool"
+      }
+    }
+  }
+}

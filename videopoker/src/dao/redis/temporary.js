@@ -1,0 +1,10 @@
+const store = {};
+const poker = {};
+const cur_bet = {};
+const reward = {};
+const bet_array = {};
+const creditAmountIdx = {};
+const firstFiveArr = {};
+const pos = {};
+const cur_bet_idx = {};
+module.exports = {store, poker, cur_bet, reward, bet_array, creditAmountIdx, firstFiveArr, pos, cur_bet_idx};
